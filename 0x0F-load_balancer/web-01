@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+#Server-01 login command
+
+
+#username and IP address with identityFile path
+
+ssh ubuntu@100.25.118.59 -i ~/.ssh/school
