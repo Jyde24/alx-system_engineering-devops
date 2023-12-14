@@ -6,16 +6,17 @@
 
 # Install and configure HAproxy on my lb-01 server.
 sudo apt-get -y update
-apt-get -y install haproxy
+sudo apt-get -y install haproxy
 
 # edit config file
 server_config=\
 "
-frontend  Jyde24_frontend
+frontend  Jyde24
         bind *:80
         mode http
-        default_backend Jyde24_backend
-backend besthor_backend
+        default_backend myservers
+
+backend myservers
         balance roundrobin
         server 330485-web-01 100.25.118.59:80 check
         server 330485-web-02 54.236.41.106:80 check
@@ -26,7 +27,7 @@ echo "$server_config" | sudo tee -a /etc/haproxy/haproxy.cfg
 echo "ENABLED=1" | sudo tee -a /etc/default/haproxy
 
 # Testing the HAproxy configuration file
-sudo haproxy -c -f /etc/haproxy/haproxy.cfg
+sudo haproxy -f /etc/haproxy/haproxy.cfg -c
 
 # Restart the Nginx service
 sudo service haproxy restart
